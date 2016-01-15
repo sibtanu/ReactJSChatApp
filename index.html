@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>ReactJSChatApp</title>
+    <link rel="stylesheet" type="text/css" href="css/chatApp.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script type="text/jsx">
+    
+    var ChatAppComponent = React.createClass({
+        createNewDiv: function() {/*creates a new div and sets it to message and appends it to parent div*/
+            /*every time the button is clicked this function is called and a new div is added with the
+            name and the message. Thus the Messages section grows with each new message*/
+            var content=document.getElementById('content');
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("class","newDiv");
+            newDiv.innerHTML=document.getElementById("name").value+": "+" "+document.getElementById("message").value;
+
+            content.appendChild(newDiv);
+            document.getElementById("message").value=' ';
+            this.checkSubmit();
+
+        },
+        checkSubmit: function(){/*This function checks if the fields are populated*/
+            var canSubmit = true;
+            var inputname=document.getElementById("name").value;
+            var inputmessage=document.getElementById("message").value;
+            if (inputname.match(/^\s*$/)||inputmessage.match(/^\s*$/)) {/*checking if field is empty or just contains whitespaces*/
+                canSubmit = false;/*set value to false if field is empty or just contains whitespaces*/
+            }
+            if (canSubmit) {
+                document.getElementById('submitbutton').disabled = false;/*this is to enable the button in the html*/
+            }
+            else{
+                document.getElementById('submitbutton').disabled = true;/*this is to disable the button in the html*/
+            }
+        },
+
+        render: function() {
+            return(
+                    <div>
+                        <h1>Chat App</h1>
+                        <label>Name:</label><input className="inputbox" id="name" type="text" name="name" placeholder="Please enter your name" onKeyUp={this.checkSubmit}/><br></br>
+                        <label>Message:</label><input className="inputbox" id="message" type="text" name="message" placeholder="Please enter a message" onKeyUp={this.checkSubmit}/><br></br>
+                        <input className="button" id="submitbutton" type="button" disabled="disabled" value="Submit" onClick={this.createNewDiv}/>
+                        <hr></hr>
+                        <h2>Messages</h2>
+                    </div>
+            );
+        }
+    });
+
+    React.render(
+
+            <ChatAppComponent/>,document.getElementById('content')
+    );
+
+</script>
+
+
+</body>
+</html>
+

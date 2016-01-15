@@ -1,0 +1,1 @@
+Download and Unzip the file. Right click on index.html and open with a browser. This application has been tested on Chrome, IE and Firefox.
